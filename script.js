@@ -60,6 +60,33 @@ function toggleEyeProtection() {
     document.body.classList.toggle("eye-protection");
 }
 
+function toggleFullScreen() {
+  const contentBox = document.querySelector('.content-box');
+  const btn = document.querySelector('button[onclick="toggleFullScreen()"]');
+
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().then(() => {
+      contentBox.classList.add('fullscreen-mode');
+    }).catch(err => {
+      alert(`Không thể bật toàn màn hình: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen();
+    contentBox.classList.remove('fullscreen-mode');
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const contentBox = document.querySelector('.content-box');
+  const btn = document.querySelector('button[onclick="toggleFullScreen()"]');
+
+  if (document.fullscreenElement) {
+    contentBox.classList.add('fullscreen-mode');
+  } else {
+    contentBox.classList.remove('fullscreen-mode');
+  }
+});
+
 // Init
 generateChapters();
 populateChapterSelect();
